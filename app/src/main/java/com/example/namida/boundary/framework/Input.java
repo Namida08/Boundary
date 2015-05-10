@@ -12,7 +12,7 @@ public interface Input {
 
 		public int type;
 		public int keyCode;
-		public char KeyChar;
+		public char keyChar;
 	}
 
 	public static class TouchEvent{

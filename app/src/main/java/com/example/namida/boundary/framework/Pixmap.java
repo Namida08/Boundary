@@ -1,9 +1,16 @@
 package com.example.namida.boundary.framework;
 
+import com.example.namida.boundary.framework.Graphics.PixMapFormat;
+
 /**
  * Created by Namida on 2015/02/15.
  */
-public class Pixmap {
-	private static final String TAG = Pixmap.class.getSimpleName();
-	private final Pixmap self = this;
+public interface Pixmap {
+	public int getWidth();
+
+	public int getHeight();
+
+	public PixMapFormat getFormat();
+
+	public void dispose();
 }

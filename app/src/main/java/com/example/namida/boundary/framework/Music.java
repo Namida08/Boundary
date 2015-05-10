@@ -10,7 +10,7 @@ public interface Music {
 
 	public void pause();
 
-	public void setLooping(boolean looping);
+	public void setLooping(boolean isLooping);
 
 	public void setVolume(float volume);
 
