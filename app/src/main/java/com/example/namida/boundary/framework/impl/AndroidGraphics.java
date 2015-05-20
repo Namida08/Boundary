@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
@@ -118,6 +119,11 @@ public class AndroidGraphics implements Graphics{
 	@Override
 	public void drawPixmap(Pixmap pixmap, int x, int y) {
 		canvas.drawBitmap(((AndroidPixmap) pixmap).bitmap, x, y, null);
+	}
+
+	@Override
+	public void drawPixmap(Pixmap pixmap, Matrix matrix) {
+		canvas.drawBitmap(((AndroidPixmap) pixmap).bitmap, matrix, null);
 	}
 
 	@Override

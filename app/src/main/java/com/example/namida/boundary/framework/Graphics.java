@@ -1,5 +1,7 @@
 package com.example.namida.boundary.framework;
 
+import android.graphics.Matrix;
+
 /**
  * Created by Namida on 2015/02/15.
  */
@@ -21,6 +23,8 @@ public interface Graphics {
 	public void drawPixmap(Pixmap pixmap, int x, int y, int srcX, int srcY, int srcWidth, int srcHeight);
 
 	public void drawPixmap(Pixmap pixmap, int x, int y);
+
+	public void drawPixmap(Pixmap pixmap, Matrix matrix);
 
 	public int getWidth();
 

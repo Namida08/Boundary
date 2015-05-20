@@ -21,6 +21,10 @@ public class AndroidInput implements Input {
 		touchHandler = new MultiTouchHandler(view, scaleX, scaleY);
 	}
 
+	@Override
+	public void update() {
+		touchHandler.update();
+	}
 
 	@Override
 	public boolean isKeyPressed(int keyCode) {

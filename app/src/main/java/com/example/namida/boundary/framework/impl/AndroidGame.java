@@ -22,12 +22,12 @@ import com.example.namida.boundary.framework.Screen;
  * Created by Namida on 2015/05/10.
  */
 public class AndroidGame extends Activity implements Game{
-	AndroidFastRenderView renderView;
-	Graphics graphics;
-	Audio audio;
-	Input input;
-	FileIO fileIO;
-	Screen screen;
+	private AndroidFastRenderView renderView;
+	private Graphics graphics;
+	private Audio audio;
+	private Input input;
+	private FileIO fileIO;
+	private Screen screen;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){

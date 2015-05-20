@@ -25,6 +25,8 @@ public interface Input {
 		public int pointer;
 	}
 
+	public void update();
+
 	public boolean isKeyPressed(int keyCode);
 
 	public boolean isTouchDown(int pointer);
