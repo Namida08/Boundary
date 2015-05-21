@@ -1,6 +1,7 @@
 package com.example.namida.boundary.boundary.Screen;
 
 import com.example.namida.boundary.boundary.Assets;
+import com.example.namida.boundary.boundary.View.VectorController;
 import com.example.namida.boundary.boundary.Would;
 import com.example.namida.boundary.framework.Game;
 import com.example.namida.boundary.framework.Graphics;
@@ -22,15 +23,18 @@ public class GameScreen extends Screen{
 
 	private GameState gameState = GameState.Ready;
 	private Would would;
+	private VectorController controller;
 
 	public GameScreen(Game game) {
 		super(game);
 		would = new Would();
+		controller = new VectorController();
 	}
 
 	@Override
 	public void update(float deltaTime) {
 		List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
+		controller.update(touchEvents);
 
 		if (gameState == GameState.Ready){
 			updateReader(touchEvents);
@@ -53,29 +57,18 @@ public class GameScreen extends Screen{
 	}
 
 	private void updateRunning(List<Input.TouchEvent> touchEvents, float deltaTime){
-		for(Input.TouchEvent event : touchEvents){
-			if(game.getInput().isTouchDown(event.pointer)){
-				if(game.getInput().getTouchX(event.pointer) < 64 && game.getInput().getTouchY(event.pointer) > 416){
-					would.player.moveLeft();
-				}
-				if(game.getInput().getTouchX(event.pointer) > 256 && game.getInput().getTouchY(event.pointer) > 416){
-					would.player.moveRight();
-				}
-			}
-		}
+		would.player.moveVector(controller.getVector().normalize().multiply(controller.getVector().getLength() / 20));
 
 		would.update(deltaTime);
 	}
 
-
-
 	@Override
 	public void present(float deltaTime) {
 		Graphics graphics = game.getGraphics();
-
 		graphics.drawPixmap(Assets.background, 0, 0);
 
 		would.draw(game);
+		controller.draw(game);
 
 	}
 

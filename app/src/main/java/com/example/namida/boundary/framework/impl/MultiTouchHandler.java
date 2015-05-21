@@ -82,39 +82,9 @@ public class MultiTouchHandler implements TouchHandler {
 		}
 	}
 
-	public void touchCountUp(){
-		TouchEvent touchEvent;
-
-		for(Input.TouchEvent event : touchEvents){
-			if(event.isTouched){
-				boolean flag = true;
-				for(Input.TouchEvent buffer : touchEventsBuffer) {
-					if(buffer.pointer == event.pointer){
-						flag = false;
-						break;
-					}
-				}
-				if(flag) {
-					touchEvent = touchEventPool.newObject();
-					touchEvent.type = TouchEvent.TOUCH_PRESS;
-					touchEvent.pointer = event.pointer;
-					touchEvent.x = touchX[event.pointer] = event.x;
-					touchEvent.y = touchY[event.pointer] = event.y;
-					touchEvent.isTouched = isTouched[event.pointer] = true;
-					touchEvent.count++;
-					touchCount[event.pointer]++;
-					touchEventsBuffer.add(touchEvent);
-				}
-			}
-		}
-
-	}
-
 	@Override
 	public List<TouchEvent> getTouchEvents() {
 		synchronized (this){
-			touchCountUp();
-
 			for(int i = 0; i < touchEvents.size(); i++){
 				touchEventPool.free(touchEvents.get(i));
 			}
