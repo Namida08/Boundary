@@ -1,6 +1,5 @@
 package com.example.namida.boundary.framework.impl;
 
-import android.view.GestureDetector;
 import android.view.View.OnTouchListener;
 import com.example.namida.boundary.framework.Input.TouchEvent;
 
@@ -11,13 +10,13 @@ import java.util.List;
  */
 public interface TouchHandler extends OnTouchListener{
 
-	public void update();
-
-	public boolean isTouchDown(int pointer);
-
 	public int getTouchX(int pointer);
 
 	public int getTouchY(int pointer);
+
+	public boolean isTouchDown(int pointer);
+
+	public int getTouchCount(int pointer);
 
 	public List<TouchEvent> getTouchEvents();
 }

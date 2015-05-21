@@ -20,8 +20,8 @@ public class GameScreen extends Screen{
 		GameOver
 	}
 
-	GameState gameState = GameState.Ready;
-	Would would;
+	private GameState gameState = GameState.Ready;
+	private Would would;
 
 	public GameScreen(Game game) {
 		super(game);
@@ -31,7 +31,6 @@ public class GameScreen extends Screen{
 	@Override
 	public void update(float deltaTime) {
 		List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
-		game.getInput().getKeyEvents();
 
 		if (gameState == GameState.Ready){
 			updateReader(touchEvents);
@@ -54,14 +53,12 @@ public class GameScreen extends Screen{
 	}
 
 	private void updateRunning(List<Input.TouchEvent> touchEvents, float deltaTime){
-		for(int i = 0; i < touchEvents.size(); i++){
-			Input.TouchEvent event = touchEvents.get(i);
-
+		for(Input.TouchEvent event : touchEvents){
 			if(game.getInput().isTouchDown(event.pointer)){
-				if(event.x < 64 && event.y > 416){
+				if(game.getInput().getTouchX(event.pointer) < 64 && game.getInput().getTouchY(event.pointer) > 416){
 					would.player.moveLeft();
 				}
-				if(event.x > 256 && event.y > 416){
+				if(game.getInput().getTouchX(event.pointer) > 256 && game.getInput().getTouchY(event.pointer) > 416){
 					would.player.moveRight();
 				}
 			}

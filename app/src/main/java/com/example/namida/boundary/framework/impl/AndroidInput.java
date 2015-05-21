@@ -22,11 +22,6 @@ public class AndroidInput implements Input {
 	}
 
 	@Override
-	public void update() {
-		touchHandler.update();
-	}
-
-	@Override
 	public boolean isKeyPressed(int keyCode) {
 		return keyboardHandler.isKeyPressed(keyCode);
 	}
@@ -44,6 +39,11 @@ public class AndroidInput implements Input {
 	@Override
 	public int getTouchY(int pointer) {
 		return touchHandler.getTouchY(pointer);
+	}
+
+	@Override
+	public int getTouchCount(int pointer) {
+		return touchHandler.getTouchCount(pointer);
 	}
 
 	@Override
