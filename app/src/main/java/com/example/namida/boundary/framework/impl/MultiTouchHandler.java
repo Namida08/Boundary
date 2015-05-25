@@ -4,7 +4,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.example.namida.boundary.framework.Input;
 import com.example.namida.boundary.framework.Input.TouchEvent;
 import com.example.namida.boundary.framework.Pool;
 
@@ -17,6 +16,7 @@ import java.util.List;
 public class MultiTouchHandler implements TouchHandler {
 	static final int TOUCH_MAX = 20;
 
+	//いらない？
 	private int[] touchX = new int[TOUCH_MAX];
 	private int[] touchY = new int[TOUCH_MAX];
 	private boolean[] isTouched = new boolean[TOUCH_MAX];
