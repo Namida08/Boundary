@@ -19,9 +19,10 @@ public class LoadingScreen extends Screen {
 	public void update(float deltaTime) {
 		Graphics graphics = game.getGraphics();
 
-		Assets.background = graphics.newPixMap("background.png", Graphics.PixMapFormat.RGB565);
-		Assets.player = graphics.newPixMap("player.png", Graphics.PixMapFormat.RGB565);
+		Assets.background = graphics.newPixMap("background.jpg", Graphics.PixMapFormat.RGB565);
+		Assets.player = graphics.newPixMap("player.png", Graphics.PixMapFormat.ARGB4444);
 
+		Assets.bullet1 = graphics.newPixMap("bullet1.png", Graphics.PixMapFormat.ARGB4444, 2);
 
 		Settings.load(game.getFileIO());
 		game.setScreen(new MainMenuScreen(game));

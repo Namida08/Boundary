@@ -3,10 +3,12 @@ package com.example.namida.boundary.framework.impl;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
 import com.example.namida.boundary.framework.Graphics;
 import com.example.namida.boundary.framework.Pixmap;
@@ -29,7 +31,7 @@ public class AndroidGraphics implements Graphics{
 		this.assets = assets;
 		this.frameBuffer = frameBuffer;
 		this.canvas = new Canvas(frameBuffer);
-		this.paint = new Paint();
+		this.paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	}
 
 
@@ -77,6 +79,60 @@ public class AndroidGraphics implements Graphics{
 		return new AndroidPixmap(bitmap, format);
 	}
 
+
+	@Override
+	public Pixmap[] newPixMap(String fileName, PixMapFormat format, int split) {
+		Bitmap.Config config = null;
+		if(format == PixMapFormat.RGB565){
+			config = Bitmap.Config.RGB_565;
+		}else if(format == PixMapFormat.ARGB4444){
+			config = Bitmap.Config.ARGB_4444;
+		}else{
+			config = Bitmap.Config.ARGB_8888;
+		}
+
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inPreferredConfig = config;
+
+		InputStream in = null;
+		Bitmap[] bitmap = new Bitmap[split];
+		try{
+			in = assets.open(fileName);
+			BitmapRegionDecoder regionDecoder = BitmapRegionDecoder.newInstance(in, true);
+			int width = 70;
+			for (int i = 0; i < split; i++) {
+				bitmap[i] = regionDecoder.decodeRegion(new Rect(0, 0, width, regionDecoder.getHeight()), null);
+				if(bitmap[i] == null){
+					throw new RuntimeException("Couldn't load bitmap from asset '" + fileName + "'");
+				}
+			};
+		} catch (IOException e){
+			throw new RuntimeException("Couldn't load bitmap from asset '" + fileName + "'");
+		} finally {
+			if(in != null){
+				try{
+					in.close();
+				} catch (IOException e){
+				}
+			}
+		}
+
+		if(bitmap[0].getConfig() == Bitmap.Config.RGB_565){
+			format = PixMapFormat.RGB565;
+		}else if(bitmap[0].getConfig() == Bitmap.Config.ARGB_4444){
+			format = PixMapFormat.ARGB4444;
+		}else{
+			format = PixMapFormat.ARGB8888;
+		}
+
+		Pixmap[] result = new Pixmap[bitmap.length];
+		for (int i = 0; i < bitmap.length; i++) {
+			result[i] = new AndroidPixmap(bitmap[i], format);
+		}
+
+		return result;
+	}
+
 	@Override
 	public void clear(int color) {
 		canvas.drawRGB((color & 0xff0000) >> 16, (color & 0xff00) >> 8, (color & 0xff));
@@ -95,9 +151,11 @@ public class AndroidGraphics implements Graphics{
 	}
 
 	@Override
-	public void drawLine(int x, int y, int x2, int y2, int color) {
+	public void drawLine(int x, int y, int x2, int y2, int width, int color) {
 		paint.setColor(color);
+		paint.setStrokeWidth(width);
 		canvas.drawLine(x, y, x2, y2, paint);
+		paint.setStrokeWidth(1);
 	}
 
 	@Override

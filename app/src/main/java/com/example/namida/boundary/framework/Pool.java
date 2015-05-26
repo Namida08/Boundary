@@ -38,4 +38,8 @@ public class Pool<T> {
 		}
 	}
 
+	public List<T> getFreeObjects() {
+		return freeObjects;
+	}
+
 }

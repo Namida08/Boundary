@@ -25,19 +25,17 @@ public interface Input {
 		public int pointer;
 		public boolean isTouched;
 		public int count;
+
+		public void setUsed(){
+			pointer = -1;
+		}
+
+		public boolean isUsed(){
+			return (pointer == -1);
+		}
 	}
 
 	public boolean isKeyPressed(int keyCode);
-
-
-	public int getTouchX(int pointer);
-
-	public int getTouchY(int pointer);
-
-	public int getTouchCount(int pointer);
-
-	public boolean isTouchDown(int pointer);
-
 
 	public float getAccelX();
 

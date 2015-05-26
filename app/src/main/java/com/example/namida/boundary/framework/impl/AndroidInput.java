@@ -27,23 +27,13 @@ public class AndroidInput implements Input {
 	}
 
 	@Override
-	public boolean isTouchDown(int pointer) {
-		return touchHandler.isTouchDown(pointer);
+	public List<KeyEvent> getKeyEvents() {
+		return keyboardHandler.getKeyEvents();
 	}
 
 	@Override
-	public int getTouchX(int pointer) {
-		return touchHandler.getTouchX(pointer);
-	}
-
-	@Override
-	public int getTouchY(int pointer) {
-		return touchHandler.getTouchY(pointer);
-	}
-
-	@Override
-	public int getTouchCount(int pointer) {
-		return touchHandler.getTouchCount(pointer);
+	public List<TouchEvent> getTouchEvents() {
+		return touchHandler.getTouchEvents();
 	}
 
 	@Override
@@ -61,13 +51,4 @@ public class AndroidInput implements Input {
 		return accelHandler.getAccelZ();
 	}
 
-	@Override
-	public List<KeyEvent> getKeyEvents() {
-		return keyboardHandler.getKeyEvents();
-	}
-
-	@Override
-	public List<TouchEvent> getTouchEvents() {
-		return touchHandler.getTouchEvents();
-	}
 }
