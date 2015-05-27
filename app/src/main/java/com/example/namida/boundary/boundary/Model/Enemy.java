@@ -11,7 +11,7 @@ public class Enemy extends Character{
 
 	public Enemy(){
 		super();
-		shot = new Shot();
+		shot = new Shot(getPoint());
 	}
 
 	public void update(){

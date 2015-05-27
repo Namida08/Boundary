@@ -1,5 +1,7 @@
 package com.example.namida.boundary.boundary.Model;
 
+import android.graphics.Point;
+
 import com.example.namida.boundary.boundary.Assets;
 import com.example.namida.boundary.framework.Game;
 import com.example.namida.boundary.framework.Pool;
@@ -14,35 +16,35 @@ import java.util.List;
 public class Shot {
 	private static final int BULLET_MAX = 100;
 
+	private int count;
+	private Point point;
+
 	private List<Bullet> bullets = new ArrayList<Bullet>();
 	private Pool<Bullet> bulletPool;
 
-	public Shot(){
+	public Shot(Point point){
+		this.count = 0;
+		this.point = point;
 		Pool.PoolObjectFactory<Bullet> factory = new Pool.PoolObjectFactory<Bullet>() {
 			@Override
 			public Bullet createObject() {
 				return new Bullet();
 			}
 		};
-		bulletPool = new Pool<Bullet>(factory, BULLET_MAX);
+		this.bulletPool = new Pool<Bullet>(factory, BULLET_MAX);
 	}
 
 	public void update(){
-		Bullet bullet;
-		for(int i = 0; i < 1; i++) {
-			bullet = bulletPool.newObject();
-			bullet.setFlag(true);
-			bullet.setPixmap(Assets.bullet1[1]);
-			bullet.setPoint(1080/2, 100);
-			//bullet.setRadius(1);
-			//bullet.setDegree(1);
-			bullet.setMoveVector(new Vector2d(0, 5));
-			bullets.add(bullet);
-		}
+		shotPattern1();
 
 		for (Bullet b : bullets) {
 			b.update();
+			if(b.out()){
+				bulletPool.free(b);
+			}
 		}
+
+		count++;
 	}
 
 	public void draw(Game game){
@@ -51,5 +53,21 @@ public class Shot {
 		}
 	}
 
-}
+	public void dispose(){
+		for (Bullet bullet : bullets) {
+			bulletPool.free(bullet);
+		}
+	}
 
+	public void shotPattern1(){
+		if(count % 10 == 0) {
+			Bullet bullet = bulletPool.newObject();
+			bullet.setPixmap(Assets.bullet1[1]);
+			bullet.setPoint(point.x, point.y);
+			bullet.setRadius(20);
+			bullet.setMoveVector(new Vector2d(0, 10));
+			bullets.add(bullet);
+		}
+	}
+
+}

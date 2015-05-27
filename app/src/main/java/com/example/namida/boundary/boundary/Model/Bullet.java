@@ -15,4 +15,8 @@ public class Bullet extends Character {
 		}
 	}
 
+	public boolean out(){
+		return getPoint().x < -10 || getPoint().x > 1930 || getPoint().y < -10 || getPoint().y > 1090;
+	}
+
 }
