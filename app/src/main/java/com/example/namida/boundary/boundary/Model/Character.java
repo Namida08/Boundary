@@ -9,22 +9,14 @@ import com.example.namida.boundary.util.Vector2d;
  * Created by Namida on 2015/05/17.
  */
 public class Character extends Object {
+
 	private int hp;
+
+
 	private Vector2d moveVector;
 
 	Character(){
 		super();
-	}
-
-	@Override
-	public void draw(Game game){
-		if(getFlag()){
-			Matrix matrix = new Matrix();
-			matrix.postScale(getScaleX(), getScaleY());
-			matrix.postRotate(getDegree());
-			matrix.postTranslate(getPoint().x - getPixmap().getWidth()/2, getPoint().y - getPixmap().getHeight()/2);
-			game.getGraphics().drawPixmap(getPixmap(), matrix);
-		}
 	}
 
 	public int getHp() {

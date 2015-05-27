@@ -54,13 +54,14 @@ public class Image {
 	}
 
 
-	public void setPoint(Point point) {
-		this.point = point;
-	}
-
 	public void setPoint(int x, int y) {
 		this.point.x = x;
 		this.point.y = y;
+	}
+
+	public void setPoint(Point point) {
+		this.point.x = point.x;
+		this.point.y = point.y;
 	}
 
 	public void setDegree(float degree) {

@@ -5,10 +5,6 @@ import android.graphics.Point;
 import com.example.namida.boundary.boundary.Assets;
 import com.example.namida.boundary.framework.Game;
 import com.example.namida.boundary.framework.Pool;
-import com.example.namida.boundary.util.Vector2d;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Namida on 2015/05/26.
@@ -19,12 +15,13 @@ public class Shot {
 	private int count;
 	private Point point;
 
-	private List<Bullet> bullets = new ArrayList<Bullet>();
+	private Bullet[] bullets;
 	private Pool<Bullet> bulletPool;
 
 	public Shot(Point point){
 		this.count = 0;
 		this.point = point;
+		bullets = new Bullet[BULLET_MAX];
 		Pool.PoolObjectFactory<Bullet> factory = new Pool.PoolObjectFactory<Bullet>() {
 			@Override
 			public Bullet createObject() {
@@ -37,10 +34,9 @@ public class Shot {
 	public void update(){
 		shotPattern1();
 
-		for (Bullet b : bullets) {
-			b.update();
-			if(b.out()){
-				bulletPool.free(b);
+		for (Bullet bullet : bullets) {
+			if(bullet != null) {
+				bullet.update();
 			}
 		}
 
@@ -49,24 +45,34 @@ public class Shot {
 
 	public void draw(Game game){
 		for (Bullet bullet : bullets) {
-			bullet.draw(game);
+			if(bullet != null) {
+				bullet.draw(game);
+			}
 		}
 	}
 
 	public void dispose(){
 		for (Bullet bullet : bullets) {
-			bulletPool.free(bullet);
+			if (bullet != null) {
+				bulletPool.free(bullet);
+			}
 		}
 	}
 
 	public void shotPattern1(){
-		if(count % 10 == 0) {
-			Bullet bullet = bulletPool.newObject();
-			bullet.setPixmap(Assets.bullet1[1]);
-			bullet.setPoint(point.x, point.y);
-			bullet.setRadius(20);
-			bullet.setMoveVector(new Vector2d(0, 10));
-			bullets.add(bullet);
+		if(count % 1 == 0) {
+			for (int i = 0; i < BULLET_MAX; i++) {
+				if(bullets[i] == null || !bullets[i].getFlag()){
+					Bullet bullet = bulletPool.newObject();
+					bullet.setPixmap(Assets.bullet1[1]);
+					bullet.setPoint(point.x, point.y);
+					bullet.setRadius(20);
+					bullet.setAngle(count);
+					bullet.setSpd(10);
+					bullets[i] = bullet;
+					break;
+				}
+			}
 		}
 	}
 

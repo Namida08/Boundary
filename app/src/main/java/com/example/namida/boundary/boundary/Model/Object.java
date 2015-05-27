@@ -1,5 +1,9 @@
 package com.example.namida.boundary.boundary.Model;
 
+import android.graphics.Matrix;
+
+import com.example.namida.boundary.framework.Game;
+
 /**
  * Created by Namida on 2015/05/26.
  */
@@ -11,6 +15,17 @@ public class Object extends Image{
 		super();
 		flag = true;
 		radius = 1.0f;
+	}
+
+	@Override
+	public void draw(Game game){
+		if(flag){
+			Matrix matrix = new Matrix();
+			matrix.postScale(getScaleX(), getScaleY());
+			matrix.postRotate(getDegree());
+			matrix.postTranslate(getPoint().x - getPixmap().getWidth()/2, getPoint().y - getPixmap().getHeight()/2);
+			game.getGraphics().drawPixmap(getPixmap(), matrix);
+		}
 	}
 
 	public boolean getFlag(){

@@ -124,12 +124,12 @@ public class Would {
 	}
 
 	public void draw(Game game){
-		for (Enemy enemy : enemies) {
-			enemy.draw(game);
-		}
 
 		player.draw(game);
 
+		for (Enemy enemy : enemies) {
+			enemy.draw(game);
+		}
 
 		borderRight.draw(game);
 		borderLeft.draw(game);

@@ -101,7 +101,7 @@ public class AndroidGraphics implements Graphics{
 			BitmapRegionDecoder regionDecoder = BitmapRegionDecoder.newInstance(in, true);
 			int width = 70;
 			for (int i = 0; i < split; i++) {
-				bitmap[i] = regionDecoder.decodeRegion(new Rect(0, 0, width, regionDecoder.getHeight()), null);
+				bitmap[i] = regionDecoder.decodeRegion(new Rect(i * width, 0,(i + 1) * width, regionDecoder.getHeight()), null);
 				if(bitmap[i] == null){
 					throw new RuntimeException("Couldn't load bitmap from asset '" + fileName + "'");
 				}
